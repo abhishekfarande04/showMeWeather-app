@@ -10,5 +10,38 @@ let currentTab=userTab;
 const API_KEY="718e08911c62ec5fb690f2e1373e956e";
 currentTab.classList.add("current-Tab"); 
 
+// lets do switching 
+// once you click on any one tab , means selected event will be active 
+
+function switchTab(clickedTab) {
+    if(clickedTab!= currentTab) {
+        currentTab.classList.remove("current-Tab");
+        currentTab=clickedTab;
+        currentTab.classList.add("current-Tab");
+    }
+
+    else {
+        // means 
+        searchForm.classList.remove("active");
+        userInfoContainer.classList.remove("active");
+        //
+    }
+}
+
+
+// this is for usertab - user's weather
+userTab.addEventListener("click", ()=> {
+    switchTab(userTab);
+});
+
+// this is for search weather
+searchTab.addEventListener("click", ()=> {
+    switchTab(searchTab);
+});
+
+ 
+console.log("hi");
+
+
 
 
