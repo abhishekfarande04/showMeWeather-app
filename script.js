@@ -17,7 +17,7 @@ function switchTab(newTab) {
     if(newTab!= oldTab) {
         oldTab.classList.remove("current-Tab");
         oldTab=newTab;
-        oldTab.classList.add("current-Tab");s
+        oldTab.classList.add("current-Tab");
 
         if(!searchForm.classList.contains("active")) {
             userInfoContainer.classList.remove("active");
@@ -29,15 +29,72 @@ function switchTab(newTab) {
         // means now user is on search weather tab now you want to switch into your weather tab so you remove the active from search and add it into your
         searchForm.classList.remove("active");
         userInfoContainer.classList.remove("active"); // info screen should also be invisible 
+        //  so user is on your weather tab so we need to show the user's weather by default so for that we use 
         getfromSessionStorage(); 
-        //
+    }
+}
+// below func is to check whether cordinates are already present in session storage 
+function getfromSessionStorage() {
+    const localCoordinates=sessionStorage.getItem("user-coordinates");
+    if(!localCoordinates) {
+        grantAccessContainer.classList.add("active");
+    }
+    else {
+        const coordinates=JSON.parse(localCoordinates);
+        fetchUserWeatherInfo(coordinates);
     }
 }
 
-function getfromSessionStorage() {
-    const localCoordinates=sessionStorage.
+// let find coordinate of user 
+async function fetchUserWeatherInfo(coordinates) {
+    const {lat,lon}=coordinates; //Object destructuring
+    // make grant container invisible 
+    grantAccessContainer.classList.remove("active");
+    // make loader visible
+    loadingScreen.classList.add("active");
+    
+    // API call 
+    try {
+        const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+        );
+
+        const data=await response.json();
+
+        loadingScreen.classList.remove("active");
+        userInfoContainer.classList.add("active");
+        // now we got the coordinates bet we need to render it on front end 
+        renderWeatherInfo(data);
+    }
+    catch(err) {
+        loadingScreen.classList.remove("active");
+    }
 }
 
+function renderWeatherInfo(weatherInfo) {
+    // firstly we have to fetch the  elements 
+    const cityName = document.querySelector("[data-cityName]");
+    const countryIcon = document.querySelector("[data-countryIcon]");
+    const desc = document.querySelector("[data-weatherDesc]");
+    const weatherIcon = document.querySelector("[data-weatherIcon]");
+    const temp = document.querySelector("[data-temp]");
+    const windspeed = document.querySelector("[data-windspeed]");
+    const humidity = document.querySelector("[data-humidity]");
+    const cloudiness = document.querySelector("[data-cloudiness]");
+
+     // lets fit the data into UI elements 
+    // here we pasted API call on browser by entering sample values then converted into JSON objects via online formatter and then that objects properties are mapped with cosnt in JS file
+    cityName.innerText = weatherInfo?.name;
+    countryIcon.src = `https://flagcdn.com/144x108/${weatherInfo?.sys?.country.toLowerCase()}.png`;
+    desc.innerText = weatherInfo?.weather?.[0]?.description;
+    weatherIcon.src = `http://openweathermap.org/img/w/${weatherInfo?.weather?.[0]?.icon}.png`;
+    temp.innerText = weatherInfo?.main?.temp;
+    windspeed.innertext = weatherInfo?.wind?.speed;
+    humidity.innertext = weatherInfo?.main?.humidity;
+    cloudiness.innerText = weatherInfo?.clouds?.all;
+    
+
+}
 
 // this is for usertab - user's weather
 userTab.addEventListener("click", ()=> {
