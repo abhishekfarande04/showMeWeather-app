@@ -92,7 +92,7 @@ function renderWeatherInfo(weatherInfo) {
     windspeed.innertext = weatherInfo?.wind?.speed;
     humidity.innertext = weatherInfo?.main?.humidity;
     cloudiness.innerText = weatherInfo?.clouds?.all;
-    
+
 
 }
 
@@ -107,9 +107,54 @@ searchTab.addEventListener("click", ()=> {
     switchTab(searchTab);
 });
 
- 
+
 console.log("hi");
 
+// lets write fucntion for grant access 
+const grantAccessButton=document.querySelector("[data-grantAccess]");
+grantAccessButton.addEventListener("click", getLocation);
 
+function getLocation() {
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        // HW - for show alert for no geolocation 
+    }
+}
 
+function showPosition() {
+    const userCoordinates = {
+        lat: showPosition.coors.latitude,
+        lon: showPosition.coors.longitude,
+    }
 
+    sessionStorage.setItem("user-coordinates", JSON.stringify(userCoordinates));
+    fetchUserWeatherInfo(userCoordinates);
+}
+
+const searchInput= document.querySelector("[data-seatchInput]");
+
+searchForm.addEventListener("submit", (e)=> {
+    e.preventDefault();
+    let cityName=searchInput.ariaValueMax;
+
+    if(cityName === ""){
+        return;
+    } else {
+        fetchSearchWeatherInfo(cityName);
+    }
+
+})
+
+async function fetchSearchWeatherInfo(data) {
+    loadingScreen.classList.add("active");
+    userInfoContainer.classList.remove("active");
+    grantAccessContainer.classList.remove("active");
+
+    try {
+        const response= await fetch(
+              
+        )
+    }
+
+}
