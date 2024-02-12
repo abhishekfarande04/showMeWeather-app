@@ -153,8 +153,14 @@ async function fetchSearchWeatherInfo(data) {
 
     try {
         const response= await fetch(
-              
-        )
+              `https://api.openweaathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+
+         );
+         const data=await response.json();
+         loadingScreen.classList.remove("active");
+         userInfoContainer.classList.add("active");
+         renderWeatherInfo(data); 
+        
     }
 
 }
