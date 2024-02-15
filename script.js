@@ -9,6 +9,7 @@ const userInfoContainer=document.querySelector(".user-info-container");
 let oldTab=userTab;
 const API_KEY="718e08911c62ec5fb690f2e1373e956e";
 oldTab.classList.add("current-Tab"); 
+getfromSessionStorage();
 
 // lets do switching 
 // once you click on any one tab , means selected event will be active 
@@ -136,7 +137,7 @@ const searchInput= document.querySelector("[data-seatchInput]");
 
 searchForm.addEventListener("submit", (e)=> {
     e.preventDefault();
-    let cityName=searchInput.ariaValueMax;
+    let cityName=searchInput.value;
 
     if(cityName === ""){
         return;
