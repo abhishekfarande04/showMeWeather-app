@@ -156,12 +156,16 @@ async function fetchSearchWeatherInfo(data) {
         const response= await fetch(
               `https://api.openweaathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
 
-         );
-         const data=await response.json();
-         loadingScreen.classList.remove("active");
-         userInfoContainer.classList.add("active");
-         renderWeatherInfo(data); 
+        );
+        const data=await response.json();
+        loadingScreen.classList.remove("active");
+        userInfoContainer.classList.add("active");
+        renderWeatherInfo(data); 
         
+    } catch (error) {
+        console.log("this is seems might be an error while fetching coordinates Try again");
+        const loadingError=loadingScreen.querySelector("p");
+        loadingError.innerText= "please try again";
     }
 
-}
+};
