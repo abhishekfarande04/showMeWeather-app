@@ -34,6 +34,7 @@ function switchTab(newTab) {
         getfromSessionStorage(); 
     }
 }
+grantAccessContainer.classList.remove("active");
 // below func is to check whether cordinates are already present in session storage 
 function getfromSessionStorage() {
     const localCoordinates=sessionStorage.getItem("user-coordinates");
@@ -89,10 +90,10 @@ function renderWeatherInfo(weatherInfo) {
     countryIcon.src = `https://flagcdn.com/144x108/${weatherInfo?.sys?.country.toLowerCase()}.png`;
     desc.innerText = weatherInfo?.weather?.[0]?.description;
     weatherIcon.src = `http://openweathermap.org/img/w/${weatherInfo?.weather?.[0]?.icon}.png`;
-    temp.innerText = weatherInfo?.main?.temp;
-    windspeed.innertext = weatherInfo?.wind?.speed;
-    humidity.innertext = weatherInfo?.main?.humidity;
-    cloudiness.innerText = weatherInfo?.clouds?.all;
+    temp.innerText = `${weatherInfo?.main?.temp} °C`;
+    windspeed.innerText = `${weatherInfo?.wind?.speed} m/s`;
+    humidity.innerText = `${weatherInfo?.main?.humidity}%`;
+    cloudiness.innerText = `${weatherInfo?.clouds?.all}%`;
 
 
 }
@@ -119,14 +120,14 @@ function getLocation() {
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
     } else {
-        // HW - for show alert for no geolocation 
+        console.log("location support is not available");
     }
 }
 
-function showPosition() {
+function showPosition(Position) {
     const userCoordinates = {
-        lat: showPosition.coors.latitude,
-        lon: showPosition.coors.longitude,
+        lat: Position.coords.latitude,
+        lon: Position.coords.longitude,
     }
 
     sessionStorage.setItem("user-coordinates", JSON.stringify(userCoordinates));

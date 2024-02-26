@@ -54,4 +54,60 @@ h1 {
     flex-direction: column;
     margin-block: 4rem;
 }
- 
+.Btn {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    border-radius: 5px;
+    background-color: var(--colorDark2);
+    cursor: pointer;
+    appearance: none;
+    border:none; 
+    color: white;
+    padding: 10px 30px;
+    /* border and appearance are none to removethe default styling applied to the button  */
+    margin-bottom: 10px;
+}
+
+
+/*  we make another subclass to style the grant location container*/
+.sub-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} 
+.grant-location-container {
+    display: none;   
+}
+.grant-location-container.active {
+    display: flex;    
+}
+.grant-location-container img {
+     margin-bottom: 2rem;
+}
+.grant-location-container p:first-of-type {
+    font-size: 1.75rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.grant-location-container p:last-of-type {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 0.75rem;
+    margin-bottom: 1.75rem;
+    letter-spacing: 0.75px;
+
+}
+.loading-container {
+    display: none;
+}
+
+.loading-container.active {
+    display: flex;
+}
+
+
+
+
+
