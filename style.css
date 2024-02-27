@@ -76,7 +76,7 @@ h1 {
     align-items: center;
 } 
 .grant-location-container {
-    display: none;   
+    /* display: none;    */
 }
 .grant-location-container.active {
     display: flex;    
@@ -102,12 +102,45 @@ h1 {
 .loading-container {
     display: none;
 }
-
+ 
 .loading-container.active {
     display: flex;
 }
+.loading-container p{
+    text-transform: uppercase;
+}
+.user-info-container{
+    /* display: none; */
+}
+.user-info-container.active{
+    display:flex;
+}
+.name {
+    display: flex;
+    align-items: center;
+    gap: 0 0.5rem;
+    margin-bottom: 1rem;
 
+}
+.name p{
+    font-size: 2rem;
+}
+.name img{
+    width: 30px;
+    height: 30px; 
+}
+.user-info-container p{
+    font-size: 1.5rem;
+    font-weight: 200 ;
+}
 
-
+.parameter-container{
+    width:90%;
+    display: flex;
+    gap: 10px 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
 
 
