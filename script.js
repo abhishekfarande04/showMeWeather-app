@@ -25,14 +25,16 @@ function switchTab(newTab) {
             grantAccessContainer.classList.remove("active");
             searchForm.classList.add("active");
         }
+        else {
+            // means now user is on search weather tab now you want to switch into your weather tab so you remove the active from search and add it into your
+            searchForm.classList.remove("active");
+            userInfoContainer.classList.remove("active"); // info screen should also be invisible 
+            //  so user is on your weather tab so we need to show the user's weather by default so for that we use 
+            getfromSessionStorage(); 
+        }
     } 
-    else {
-        // means now user is on search weather tab now you want to switch into your weather tab so you remove the active from search and add it into your
-        searchForm.classList.remove("active");
-        userInfoContainer.classList.remove("active"); // info screen should also be invisible 
-        //  so user is on your weather tab so we need to show the user's weather by default so for that we use 
-        getfromSessionStorage(); 
-    }
+    
+    
 }
 grantAccessContainer.classList.remove("active");
 // below func is to check whether cordinates are already present in session storage 
@@ -102,11 +104,13 @@ function renderWeatherInfo(weatherInfo) {
 userTab.addEventListener("click", ()=> {
     // when you want to fetch the data of user 
     switchTab(userTab);
+    console.log("usertab called");
 });
 
 // this is for search weather
 searchTab.addEventListener("click", ()=> {
     switchTab(searchTab);
+    console.log("searchtab called");
 });
 
 
@@ -134,7 +138,7 @@ function showPosition(Position) {
     fetchUserWeatherInfo(userCoordinates);
 }
 
-const searchInput= document.querySelector("[data-seatchInput]");
+const searchInput= document.querySelector("[data-searchInput]");
 
 searchForm.addEventListener("submit", (e)=> {
     e.preventDefault();
@@ -148,14 +152,14 @@ searchForm.addEventListener("submit", (e)=> {
 
 })
 
-async function fetchSearchWeatherInfo(data) {
+async function fetchSearchWeatherInfo(city) {
     loadingScreen.classList.add("active");
     userInfoContainer.classList.remove("active");
     grantAccessContainer.classList.remove("active");
 
     try {
         const response= await fetch(
-              `https://api.openweaathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+              `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
 
         );
         const data=await response.json();
